@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo Conexión Senior - Validación Inclusiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 720px;
+            background: #ffffff;
+            border: 12px solid #1a1a1a;
+            border-radius: 45px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            margin: 20px auto;
+        }
+
+        .senior-button {
+            background-color: #FFD700; /* Amarillo Senior: Alta visibilidad */
+            color: #000;
+            font-size: 1.4rem;
+            font-weight: 800;
+            padding: 24px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #000;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 0 #b89b00;
+        }
+
+        .senior-button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #b89b00;
+        }
+
+        .text-header { font-size: 1.8rem; font-weight: 800; line-height: 1.2; color: #1e3a8a; }
+        .text-body { font-size: 1.2rem; color: #374151; line-height: 1.5; }
+
+        .help-fab {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            background: #e11d48;
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 15px rgba(225, 29, 72, 0.4);
+            cursor: pointer;
+            z-index: 40;
+            border: 3px solid white;
+        }
+
+        .pulse-animation {
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(225, 29, 72, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="max-w-xl mx-auto pt-8 px-4 text-center">
+    <h1 class="text-3xl font-extrabold text-blue-900">Anexo 1: Validación "Senior"</h1>
+    <p class="text-gray-500 mt-2">Testeo de Prototipo de Baja Fidelidad</p>
+</div>
+
+<div class="phone-container">
+    <!-- BOTÓN DE AYUDA PERMANENTE (Salvavidas) -->
+    <div class="help-fab pulse-animation" onclick="showModal('helpModal')">
+        <span class="text-[10px] font-bold">NECESITO</span>
+        <span class="text-xs font-black uppercase">AYUDA</span>
+    </div>
+
+    <!-- PANTALLA 1: INICIO -->
+    <div id="step1" class="p-8 h-full flex flex-col justify-between">
+        <div class="mt-8 text-center">
+            <h2 class="text-header mb-6">¡Hola de nuevo, Ricardo!</h2>
+            <p class="text-body mb-8">Lamentamos lo ocurrido con tu celular. Estamos aquí para devolverte tu línea de forma segura.</p>
+            <div class="bg-blue-100 p-4 rounded-xl border-2 border-blue-400">
+                <p class="text-blue-900 font-bold">✓ Tus contactos están a salvo.</p>
+                <p class="text-blue-900 font-bold">✓ Proceso guiado paso a paso.</p>
+            </div>
+        </div>
+        <button onclick="nextStep(1, 2)" class="senior-button">INICIAR</button>
+    </div>
+
+    <!-- PANTALLA 2: DNI -->
+    <div id="step2" class="p-8 h-full flex flex-col justify-between hidden">
+        <div>
+            <h2 class="text-header mb-6">Paso 1: Foto del DNI</h2>
+            <p class="text-body mb-6">Presiona el botón amarillo y muestra tu DNI a la cámara del aplicativo.</p>
+            <div class="bg-gray-100 border-4 border-dashed border-gray-400 rounded-3xl h-56 flex items-center justify-center">
+                <div class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    </svg>
+                    <p class="mt-2 text-gray-500 font-bold">CUADRA TU DNI AQUÍ</p>
+                </div>
+            </div>
+        </div>
+        <button onclick="nextStep(2, 3)" class="senior-button">TOMAR FOTO</button>
+    </div>
+
+    <!-- PANTALLA 3: BIOMETRÍA CON FALLO SIMULADO -->
+    <div id="step3" class="p-8 h-full flex flex-col justify-between hidden">
+        <div>
+            <h2 class="text-header mb-6">Paso 2: Sonríe a la cámara</h2>
+            <p class="text-body mb-6">Es para validar que eres tú y no un extraño.</p>
+            <div class="relative w-48 h-48 mx-auto">
+                <div id="bioCircle" class="w-full h-full rounded-full border-8 border-blue-500 overflow-hidden bg-gray-200 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div id="errorIcon" class="absolute inset-0 flex items-center justify-center hidden">
+                    <div class="bg-red-600 rounded-full p-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <p id="statusMsg" class="text-center mt-6 text-xl font-bold text-gray-600 italic">Esperando...</p>
+        </div>
+        
+        <div id="normalAction">
+            <button onclick="runBiometry()" class="senior-button w-full">LISTO</button>
+        </div>
+
+        <div id="failAction" class="hidden space-y-4">
+            <p class="text-red-700 font-bold text-center text-lg leading-tight">No pudimos reconocerte. <br>¡No te preocupes!</p>
+            <button onclick="showModal('videoCall')" class="senior-button w-full bg-green-600 border-green-800 text-white shadow-none">📳 HABLAR CON ASESOR </button>
+        </div>
+    </div>
+
+    <!-- PANTALLA 4: ÉXITO -->
+    <div id="step4" class="p-8 h-full flex flex-col justify-between hidden">
+        <div class="text-center">
+            <div class="mt-12 text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-32 w-32 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="5" d="M5 13l4 4L19 7" />
+                </svg>
+            </div>
+            <h2 class="text-header mt-4 mb-4">¡Todo salió bien!</h2>
+            <p class="text-body mb-8">Tu línea está activa. Tu nuevo chip llegará mañana a tu casa.</p>
+            <div class="bg-gray-100 p-6 rounded-2xl text-left border-2 border-gray-200">
+                <p class="font-bold text-lg mb-2 text-blue-900">Resumen de hoy:</p>
+                <p class="text-gray-700">✓ Contactos recuperados</p>
+                <p class="text-gray-700">✓ Reposición confirmada</p>
+                <p class="text-gray-700">✓ Token familiar enviado</p>
+            </div>
+        </div>
+        <button onclick="location.reload()" class="senior-button">FINALIZAR</button>
+    </div>
+
+    <!-- MODAL VIDEOLLAMADA -->
+    <div id="videoCall" class="absolute inset-0 bg-gray-900 bg-opacity-95 hidden z-50 p-8 flex flex-col items-center justify-center">
+        <div class="w-32 h-32 bg-blue-600 rounded-full flex items-center justify-center mb-6 animate-pulse border-4 border-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <h3 class="text-white text-2xl font-black text-center mb-2">CONECTANDO...</h3>
+        <p class="text-blue-300 text-center text-lg mb-10">Un asesor validará tu rostro manualmente para tu seguridad.</p>
+        <button onclick="closeModal('videoCall'); nextStep(3,4)" class="senior-button w-full bg-white text-black">SIMULAR VALIDACIÓN OK</button>
+    </div>
+
+    <!-- MODAL AYUDA GENERAL -->
+    <div id="helpModal" class="absolute inset-0 bg-white hidden z-50 p-8 flex flex-col items-center justify-center">
+        <h2 class="text-header mb-8 text-center">¿Necesitas ayuda con el trámite?</h2>
+        <div class="space-y-6 w-full">
+            <a href="#" class="senior-button block w-full bg-red-600 text-white border-red-800">LLAMAR AL 123</a>
+            <button onclick="closeModal('helpModal')" class="senior-button w-full bg-gray-200 border-gray-400">VOLVER</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function nextStep(current, next) {
+        document.getElementById('step' + current).classList.add('hidden');
+        document.getElementById('step' + next).classList.remove('hidden');
+    }
+
+    function runBiometry() {
+        const msg = document.getElementById('statusMsg');
+        msg.innerText = "Analizando tu rostro...";
+        msg.classList.add('text-blue-600');
+        
+        setTimeout(() => {
+            msg.innerText = "Error: Luz insuficiente";
+            msg.classList.replace('text-blue-600', 'text-red-600');
+            document.getElementById('bioCircle').classList.replace('border-blue-500', 'border-red-600');
+            document.getElementById('errorIcon').classList.remove('hidden');
+            document.getElementById('normalAction').classList.add('hidden');
+            document.getElementById('failAction').classList.remove('hidden');
+        }, 2000);
+    }
+
+    function showModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+</script>
+
+</body>
+</html>
